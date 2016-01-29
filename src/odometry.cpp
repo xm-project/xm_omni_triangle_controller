@@ -165,6 +165,7 @@ void Odometry::integrateExact(double linear_x, double linear_y, double angular)
 		heading_ += angular;
 		x_       +=  linear_x * cos(heading_old) + linear_y * sin(heading_old);
 		y_       +=  -linear_y * cos(heading_old) + linear_x * sin(heading_old);
+        ROS_INFO("the heading is %f ,  the x is %f , the y is %f",heading_, x_, y_);
 	}
 }
 

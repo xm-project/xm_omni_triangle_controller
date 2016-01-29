@@ -184,8 +184,9 @@ bool OmniDriveController::init(hardware_interface::VelocityJointInterface* hw,
 	wheel1_joint = hw->getHandle(wheel1_name);  // throws on failure
 	wheel2_joint = hw->getHandle(wheel2_name);  // throws on failure
 	wheel3_joint = hw->getHandle(wheel3_name);
-
+	//test
 	sub_command_ = controller_nh.subscribe("smooth_cmd_vel", 1, &OmniDriveController::cmdVelCallback, this);
+	//sub_command_ = controller_nh.subscribe("cmd_vel", 1, &OmniDriveController::cmdVelCallback, this);
 	// ROS_INFO("wocao");
 	return true;
 }
@@ -266,8 +267,6 @@ void OmniDriveController::update(const ros::Time& time, const ros::Duration& per
 
 			ROS_INFO("send velocity is %f %f %f", wheel1_cmd,wheel2_cmd,wheel3_cmd);
 
-			//ROS_INFO("the velocity is %f  %f  %f", wheel1_cmd, wheel2_cmd, wheel3_cmd);
-
 			wheel1_joint.setCommand(wheel1_cmd);
 			wheel2_joint.setCommand(wheel2_cmd);
 			wheel3_joint.setCommand(wheel3_cmd);
@@ -302,7 +301,7 @@ void OmniDriveController::cmdVelCallback(const geometry_msgs::Twist& command)
 {
 	if(isRunning())
 	{
-		command_struct_.angular    = command.angular.z;
+		command_struct_.angular   = command.angular.z;
 		command_struct_.linear_x   = command.linear.x;
 		command_struct_.linear_y   = command.linear.y;
 		command_struct_.stamp = ros::Time::now();
@@ -407,8 +406,8 @@ bool OmniDriveController::setOdomParamsFromUrdf(ros::NodeHandle& root_nh,
 //		return false;
 //	}
 
-	wheel_radius_ = 0.1016 / 2;
-	wheel_center_ = 0.1924;
+	wheel_radius_ = 0.1000 / 2;
+	wheel_center_ = 0.1833;
 
 	// Set wheel params for the odometry computation
 	odometry_.setWheelParams(wheel_center_, wheel_radius_);
